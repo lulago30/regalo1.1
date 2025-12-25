@@ -78,9 +78,17 @@
 
         .start-text {
             font-size: 2em;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             color: #ffb3b3;
             text-shadow: 0 0 20px rgba(255, 77, 77, 0.5);
+        }
+
+        .start-subtext {
+            font-size: 0.9em;
+            margin-bottom: 30px;
+            color: #b3b3ff;
+            font-style: italic;
+            opacity: 0.7;
         }
 
         .stars {
@@ -107,10 +115,10 @@
             50% { opacity: 1; }
         }
 
-        .floating-heart {
+        .floating-heart, .floating-clown {
             position: fixed;
             font-size: 2em;
-            animation: floatUp 6s linear infinite;
+            animation: floatUp 6s linear;
             opacity: 0;
             pointer-events: none;
             z-index: 1;
@@ -168,6 +176,16 @@
             margin-bottom: 15px;
             animation: heartbeat 1.5s ease-in-out infinite;
             filter: drop-shadow(0 0 20px rgba(255, 77, 77, 0.8));
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .heart-decoration:hover {
+            transform: scale(1.1);
+        }
+
+        .heart-decoration:active {
+            transform: scale(0.95);
         }
 
         @keyframes heartbeat {
@@ -202,39 +220,32 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .control-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 20px;
+        .interactive-zone {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 77, 77, 0.1);
+            border-radius: 15px;
+            border: 2px dashed rgba(255, 77, 77, 0.4);
         }
 
-        .btn {
-            padding: 15px 30px;
-            font-size: 1.1em;
-            background: linear-gradient(135deg, #ff4d4d, #ff1744);
-            color: white;
-            border: none;
-            border-radius: 50px;
+        .interactive-text {
+            font-size: 1em;
+            color: #ffb3b3;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .big-heart-button {
+            font-size: 5em;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(255, 77, 77, 0.4);
-            font-family: 'Segoe UI', sans-serif;
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            transition: transform 0.1s;
+            user-select: none;
         }
 
-        .btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(255, 77, 77, 0.6);
-        }
-
-        .btn:active {
-            transform: scale(0.95);
-        }
-
-        .btn-pause {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
+        .big-heart-button:active {
+            transform: scale(0.85);
         }
 
         .snowflake {
@@ -255,75 +266,55 @@
             }
         }
 
-        .playing-indicator {
-            margin-top: 25px;
-            padding: 15px;
-            font-size: 1.1em;
-            color: #ffb3b3;
-            background: linear-gradient(135deg, rgba(255, 77, 77, 0.2), rgba(138, 43, 226, 0.2));
-            border-radius: 15px;
-            border: 2px solid rgba(255, 77, 77, 0.4);
-            animation: pulseIndicator 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulseIndicator {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.02); }
-        }
-
-        .volume-control {
-            display: flex;
-            margin-top: 20px;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .volume-icon {
-            font-size: 1.5em;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .volume-icon:hover {
-            transform: scale(1.2);
-        }
-
-        .volume-slider {
-            width: 150px;
-            height: 6px;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.3);
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #ff4d4d;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.8);
-        }
-
-        .volume-slider::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #ff4d4d;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.8);
-            border: none;
-        }
-
-        .loading {
-            display: none;
+        .click-counter {
             margin-top: 15px;
             font-size: 0.9em;
-            color: #ffb3b3;
+            color: #b3b3ff;
             opacity: 0.8;
+        }
+
+        .screamer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 1em;
+            z-index: 10000;
+            animation: screamerAppear 0.3s ease-out forwards;
+            text-shadow: 0 0 50px rgba(255, 0, 0, 1);
+            pointer-events: none;
+        }
+
+        @keyframes screamerAppear {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(360deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes screamerShake {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            10% { transform: translate(-48%, -52%) rotate(-5deg) scale(1.05); }
+            20% { transform: translate(-52%, -48%) rotate(5deg) scale(0.95); }
+            30% { transform: translate(-50%, -52%) rotate(-5deg) scale(1.05); }
+            40% { transform: translate(-52%, -50%) rotate(5deg) scale(0.95); }
+            50% { transform: translate(-48%, -48%) rotate(-5deg) scale(1.05); }
+            60% { transform: translate(-52%, -52%) rotate(5deg) scale(0.95); }
+            70% { transform: translate(-50%, -48%) rotate(-5deg) scale(1.05); }
+            80% { transform: translate(-48%, -50%) rotate(5deg) scale(0.95); }
+            90% { transform: translate(-52%, -48%) rotate(-5deg) scale(1.05); }
+        }
+
+        .screamer.shaking {
+            animation: screamerShake 0.1s infinite;
         }
 
         @media (max-width: 480px) {
@@ -332,44 +323,36 @@
             .heart-decoration { font-size: 3em; }
             .start-text { font-size: 1.5em; }
             .start-button { padding: 20px 40px; font-size: 1.3em; }
+            .big-heart-button { font-size: 4em; }
         }
     </style>
 </head>
 <body>
 
     <div class="start-screen" id="startScreen">
-        <div class="start-text">💕 Tu regalo está listo 💕</div>
+        <div class="start-text">💕 Toca para abrir tu regalo 💕</div>
+        <div class="start-subtext">(Ya parece la estafa de puntos de Temu)</div>
         <button class="start-button" onclick="iniciarExperiencia()">
             🎁 Abrir Regalo
         </button>
-        <div class="loading" id="loadingText">Cargando música...</div>
     </div>
 
     <div class="stars" id="stars"></div>
 
     <div class="container" id="mainContainer">
-        <div class="heart-decoration">💖</div>
+        <div class="heart-decoration" onclick="crearExplosionCorazones(event)">💖</div>
         <h1>¡Feliz Navidad!</h1>
         <div class="message">
             Te quiero muchísimo 💕<br>
-            Eres lo mejor que me ha pasado<br>
-            Esta noche es especial porque estás tú ✨<br>
-            <small style="opacity: 0.8;">🎄 Diciembre 2024 🎄</small>
+            Me gustas mucho y eres mi persona favoritaaa<br>
+            Quiero estar contigo para darte muchos besitos 😘<br>
+            Eres increíble y me haces muy feliz ✨
         </div>
 
-        <div class="playing-indicator">
-            ♫ Escucha con el corazón... ♫
-        </div>
-
-        <div class="control-buttons">
-            <button class="btn btn-pause" id="playPauseBtn" onclick="togglePlayPause()">
-                ⏸️ Pausar
-            </button>
-        </div>
-
-        <div class="volume-control">
-            <span class="volume-icon" onclick="toggleMute()" id="volumeIcon">🔊</span>
-            <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
+        <div class="interactive-zone">
+            <div class="interactive-text">👇 Toca el corazón y mira qué pasa 👇</div>
+            <div class="big-heart-button" onclick="crearExplosionCorazones(event)">❤️</div>
+            <div class="click-counter">Toques: <span id="clickCount">0</span> 🤡</div>
         </div>
     </div>
 
@@ -381,23 +364,11 @@
         const audio = document.getElementById("musica");
         const startScreen = document.getElementById("startScreen");
         const mainContainer = document.getElementById("mainContainer");
-        const playPauseBtn = document.getElementById("playPauseBtn");
-        const volumeSlider = document.getElementById("volumeSlider");
-        const volumeIcon = document.getElementById("volumeIcon");
-        const loadingText = document.getElementById("loadingText");
+        const clickCountSpan = document.getElementById("clickCount");
         
-        let isPlaying = false;
-        let isMuted = false;
+        let clickCount = 0;
 
-        audio.volume = 0.7;
-
-        audio.addEventListener('loadstart', function() {
-            loadingText.style.display = 'block';
-        });
-
-        audio.addEventListener('canplay', function() {
-            loadingText.style.display = 'none';
-        });
+        audio.volume = 0.5;
 
         function iniciarExperiencia() {
             startScreen.classList.add('hidden');
@@ -407,65 +378,89 @@
             }, 500);
 
             setTimeout(() => {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    iniciarEfectos();
-                }).catch(error => {
-                    console.log("Error al reproducir:", error);
-                    document.body.addEventListener('click', () => {
-                        if (!isPlaying) {
-                            audio.play().then(() => {
-                                isPlaying = true;
-                                iniciarEfectos();
-                            });
-                        }
-                    }, { once: true });
+                audio.play().catch(error => {
+                    console.log("Reproducción automática bloqueada");
                 });
+                iniciarEfectos();
             }, 1000);
         }
 
         function iniciarEfectos() {
             crearEstrellas();
             iniciarNieve();
-            iniciarCorazones();
+            iniciarCorazonesAleatorios();
         }
 
-        function togglePlayPause() {
-            if (audio.paused) {
-                audio.play();
-                playPauseBtn.innerHTML = '⏸️ Pausar';
-                playPauseBtn.classList.remove('btn-pause');
-            } else {
-                audio.pause();
-                playPauseBtn.innerHTML = '▶️ Reanudar';
-                playPauseBtn.classList.add('btn-pause');
+        function crearExplosionCorazones(event) {
+            clickCount++;
+            clickCountSpan.textContent = clickCount;
+
+            const x = event.clientX || window.innerWidth / 2;
+            const y = event.clientY || window.innerHeight / 2;
+
+            const numCorazones = Math.random() > 0.8 ? 15 : 8;
+            
+            for (let i = 0; i < numCorazones; i++) {
+                setTimeout(() => {
+                    if (Math.random() > 0.7) {
+                        crearPayasoVolador(x, y);
+                    } else {
+                        crearCorazonVolador(x, y);
+                    }
+                }, i * 50);
+            }
+
+            if (clickCount % 10 === 0) {
+                crearLluviaPayasos();
+                mostrarScreamer();
             }
         }
 
-        volumeSlider.addEventListener('input', function() {
-            audio.volume = this.value / 100;
-            isMuted = false;
-            actualizarIconoVolumen();
-        });
-
-        function toggleMute() {
-            if (isMuted) {
-                audio.volume = volumeSlider.value / 100;
-                isMuted = false;
-            } else {
-                audio.volume = 0;
-                isMuted = true;
-            }
-            actualizarIconoVolumen();
+        function crearCorazonVolador(x, y) {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = ['💕', '❤️', '💖', '💗', '💝', '💓', '💞'][Math.floor(Math.random() * 7)];
+            
+            const offsetX = (Math.random() - 0.5) * 200;
+            heart.style.left = x + offsetX + 'px';
+            heart.style.top = y + 'px';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            heart.style.fontSize = (Math.random() * 2 + 1.5) + 'em';
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 6000);
         }
 
-        function actualizarIconoVolumen() {
-            if (isMuted || audio.volume === 0) {
-                volumeIcon.textContent = '🔇';
-            } else if (audio.volume < 0.5) {
-                volumeIcon.textContent = '🔉';
-            } else {
-                volumeIcon.textContent = '🔊';
+        function crearPayasoVolador(x, y) {
+            const clown = document.createElement('div');
+            clown.classList.add('floating-clown');
+            clown.innerHTML = ['🤡', '🎪', '🎭', '🎉'][Math.floor(Math.random() * 4)];
+            
+            const offsetX = (Math.random() - 0.5) * 200;
+            clown.style.left = x + offsetX + 'px';
+            clown.style.top = y + 'px';
+            clown.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            clown.style.fontSize = (Math.random() * 2 + 1.5) + 'em';
+            
+            document.body.appendChild(clown);
+            
+            setTimeout(() => clown.remove(), 6000);
+        }
+
+        function crearLluviaPayasos() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const clown = document.createElement('div');
+                    clown.classList.add('floating-clown');
+                    clown.innerHTML = '🤡';
+                    clown.style.left = Math.random() * 100 + 'vw';
+                    clown.style.top = '-50px';
+                    clown.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    clown.style.fontSize = (Math.random() * 1.5 + 1) + 'em';
+                    document.body.appendChild(clown);
+                    setTimeout(() => clown.remove(), 5000);
+                }, i * 100);
             }
         }
 
@@ -497,7 +492,7 @@
         }
 
         function iniciarNieve() {
-            setInterval(createSnowflake, 100);
+            setInterval(createSnowflake, 200);
             for (let i = 0; i < 30; i++) {
                 setTimeout(createSnowflake, i * 100);
             }
@@ -508,6 +503,7 @@
             heart.classList.add('floating-heart');
             heart.innerHTML = ['💕', '❤️', '💖', '💗', '💝'][Math.floor(Math.random() * 5)];
             heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
             heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
             heart.style.fontSize = (Math.random() * 1.5 + 1) + 'em';
             document.body.appendChild(heart);
@@ -515,71 +511,30 @@
             setTimeout(() => heart.remove(), 7000);
         }
 
-        function iniciarCorazones() {
-            setInterval(createFloatingHeart, 600);
+        function iniciarCorazonesAleatorios() {
+            setInterval(createFloatingHeart, 800);
         }
 
-        audio.addEventListener('error', function(e) {
-            console.error('Error al cargar el audio:', e);
-            playPauseBtn.innerHTML = '⚠️ Error de audio';
-            playPauseBtn.disabled = true;
-        });
+        function mostrarScreamer() {
+            const screamer = document.createElement('div');
+            screamer.classList.add('screamer');
+            screamer.innerHTML = '🤡';
+            screamer.style.fontSize = '30em';
+            
+            document.body.appendChild(screamer);
+
+            setTimeout(() => {
+                screamer.classList.add('shaking');
+            }, 300);
+
+            setTimeout(() => {
+                screamer.style.transition = 'all 0.5s ease-out';
+                screamer.style.opacity = '0';
+                screamer.style.transform = 'translate(-50%, -50%) scale(3)';
+                setTimeout(() => screamer.remove(), 500);
+            }, 2500);
+        }
     </script>
 </body>
 </html>
-```
 
-4. Scroll hacia abajo y click en **"Commit changes"**
-
----
-
-#### **B) El archivo de audio (audio.mp3)**
-
-1. De vuelta en la página principal del repositorio, click en **"Add file"** → **"Upload files"**
-2. Arrastra tu archivo MP3 (el de Dropbox)
-3. **IMPORTANTE:** Renómbralo a exactamente: `audio.mp3`
-4. Click en **"Commit changes"**
-
----
-
-### **PASO 4: Activar GitHub Pages**
-
-1. En tu repositorio, ve a **"Settings"** (arriba a la derecha)
-2. En el menú izquierdo, busca y click en **"Pages"**
-3. En **"Branch"** selecciona: **main**
-4. Deja **"/ (root)"** seleccionado
-5. Click en **"Save"**
-6. ¡Espera 1-2 minutos!
-
----
-
-### **PASO 5: Obtener tu enlace**
-
-1. Refresca la página de Settings → Pages
-2. Verás un mensaje verde que dice:
-```
-   Your site is live at https://TU-USUARIO.github.io/regalo-navidad/
-```
-3. **¡ESE ES TU ENLACE!** 🎉
-
----
-
-## 📱 **CÓMO ENVIÁRSELO:**
-```
-🎄 Feliz Navidad mi amor 💕
-
-Hice algo especial para ti...
-Abre este enlace:
-
-https://TU-USUARIO.github.io/regalo-navidad/
-
-Presiona el botón rojo y escucha 🎁❤️
-```
-
----
-
-## ✅ **RESUMEN DE LO QUE SUBISTE:**
-```
-📁 tu-repositorio/
-   📄 index.html (la página web)
-   🎵 audio.mp3 (tu canción)
